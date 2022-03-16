@@ -1,0 +1,29 @@
+  .artist-grid-item{
+      cursor: pointer;
+      width: 90%;
+          
+      margin-top: 10px;
+      margin-right:1%;
+      margin-left: 1%;
+
+      background: #e8e8e8;
+      border-radius: .8rem; 
+      box-shadow: 0 .2rem 1rem rgba(130, 130, 130, 0.64);
+
+      padding: 0;
+    
+      text-align: center;
+  }
+    
+    #picture{
+      width: 12rem;
+      height: 12rem;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 50%;
+  }
+
+    .artist-grid-item h4{
+    /* margin-top: -.5rem; */
+    text-align: center;
+  }

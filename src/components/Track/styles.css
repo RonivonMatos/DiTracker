@@ -1,0 +1,40 @@
+.track-item{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    width: 97%;
+        
+    margin-top: 10px;
+    margin-right:1%;
+    margin-left: 1%;
+  
+    background: #e8e8e8;
+    border-radius: .2rem;
+    box-shadow: 0 .2rem 1rem rgba(130, 130, 130, 0.64);
+}
+   
+.track-item #cover{
+    padding: 0.2rem;
+    height: 4rem;
+    width: 4rem;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 0;
+}
+
+.track-description{
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#track-info h4{
+    margin-top: 0;
+    margin-left: 0;}
+  
+  #track-info{
+    margin-left: 1rem;
+    right: 0;
+    /* text-align: left; */
+}
