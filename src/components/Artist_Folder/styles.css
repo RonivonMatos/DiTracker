@@ -1,7 +1,8 @@
   .artist-grid-item{
       cursor: pointer;
-      width: 90%;
-          
+      width: 16rem;
+      height: 20rem;
+      
       margin-top: 10px;
       margin-right:1%;
       margin-left: 1%;
@@ -13,11 +14,11 @@
       padding: 0;
     
       text-align: center;
-  }
+  } 
     
     #picture{
-      width: 12rem;
-      height: 12rem;
+      margin-top: 2rem;
+      width: 80%;
       object-fit: cover;
       object-position: center;
       border-radius: 50%;

@@ -1,6 +1,7 @@
   .album-grid-item{
       cursor: pointer;
-      width: 90%;
+      width: 16rem;
+      height: 20rem;
           
       margin-top: 10px;
       margin-right:1%;
@@ -19,17 +20,22 @@
       top: -2rem;
       left: 0;
       padding: 1rem;
-      align-items: center;
+      align-items: center; 
       width: 100%;
       border-radius: 1.5rem;
   }
-    
-/*   
-    h4{
-      margin-top: 1rem;
+     
+  
+   h4{
+    white-space: nowrap;
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width:calc(80%);
+      /* margin-top: 1rem;
       margin-left: 1rem;
-      text-align: left;
-  } */
+      text-align: left; */
+  }
     
       #separator-line{
           height: 1px;

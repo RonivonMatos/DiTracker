@@ -25,7 +25,7 @@ export function Search() {
       await spotifyApi.searchArtists(query)
       .then(function(data) {
         console.log('Search artists by "Iron Maiden:\n', data.body.artists.items);
-        setArtistSearch(data.body.artists.items.slice(0,5));
+        setArtistSearch(data.body.artists.items.slice(0,4));
       }, function(err) {
         console.error(err);
       });
@@ -33,7 +33,7 @@ export function Search() {
       await spotifyApi.searchTracks(query)
       .then(function(data) {
         console.log(`Search by ${query}\n`, data.body.tracks.items);
-        setTrackSearch(data.body.tracks.items.slice(0,5));
+        setTrackSearch(data.body.tracks.items.slice(0,4));
       }, function(err) {
         console.error(err);
       });
@@ -41,7 +41,7 @@ export function Search() {
       await spotifyApi.searchAlbums(query, {album_type : 'album'})
       .then(function(data) {
         console.log(`Search Albums by ${query}\n`, data.body.albums.items);
-        setAlbumSearch(data.body.albums.items.slice(0,5));
+        setAlbumSearch(data.body.albums.items.slice(0,4));
       }, function(err) {
         console.error(err);
       });

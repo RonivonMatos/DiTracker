@@ -1,16 +1,14 @@
-import { useEffect, useState } from 'react';
 import './App.css';
 
 import { Home } from './pages/Home';
-import { Artist } from './pages/Artist';
 import { BrowserRouter, Route, Routes, Link, useParams } from 'react-router-dom';
 import {spotifyApi} from "./services/network/spotify-api/spotify-api";
-import { Artist_Page, Album_Page, Album_Folder,Artist_Folder, Track  } from './components';
+import { Artist_Page, Album_Page } from './components';
 import { Search } from './pages/Search';
 
-spotifyApi.setAccessToken("BQDUn1fSn4tOKukwQfN0kUOa5yzP9Osd5mY7PWJ4tX-MLjSnYL2d77X6o-OVnYhJfNEhOa6ym0nfZrBsU40");
+spotifyApi.setAccessToken("BQCWMyyWtGPwtcGKKFParNMNtdBPKyyKuJZeuJ_vLJZOU79pBL1cUNZR8ITqJoRCtveBOkLX88pw-ypLmkY");
 
-function App() {
+function App() { 
   return (
     <>
     <header>
