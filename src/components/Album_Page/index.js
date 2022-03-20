@@ -6,15 +6,24 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
  
  
-export function Album_Page(){
+export function Album_Page(props){
     const [albumTracks, setAlbumTracks] = useState([]);
  
     const {
         album_id
     } = useParams();
 
+    const {
+        album_id2,
+        albumCover,
+        albumName,
+        albumType,
+        release,
+        totalTracks
+    } = props;
+
     const getTracks = async () => {
-        spotifyApi.getAlbumTracks(album_id)
+        spotifyApi.getAlbumTracks(album_id || album_id2)
         .then(function(data) {
             console.log(data.body.items);
             setAlbumTracks(data.body.items)
@@ -31,9 +40,20 @@ export function Album_Page(){
 
     console.log(album_id)
     
-    return(
+    return( 
         <div>
             <div className="track-container">
+                <div className="album-header">
+                    <div className="album-cover">
+                        <img src={albumCover}/>
+                    </div> 
+                    <div>
+                        <h2>
+                            {albumName}
+                        </h2>
+                        {`${albumType} & ${release} & ${totalTracks} ${totalTracks > 1 ? 'songs' : 'song'}`}
+                    </div>
+                </div>
                 {albumTracks.map(valor =>{
                     let minutes = Math.floor(valor.duration_ms / 60000);
                     let seconds = Math.round((valor.duration_ms - minutes * 60000)/1000);
@@ -41,6 +61,7 @@ export function Album_Page(){
                         seconds=`0${seconds}`
                     }
                     return(
+                        <>
                         <Track
                             artistName = {valor.artists[0].name}
                             // albumName = {valor.album.name}
@@ -50,6 +71,7 @@ export function Album_Page(){
                             duration = {`${minutes}:${seconds}`}
                         > 
                         </Track>
+                        </>
                     )
                 })}
             </div>

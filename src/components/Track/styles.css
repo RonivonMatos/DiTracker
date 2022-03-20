@@ -8,9 +8,9 @@
     margin-right:1%;
     margin-left: 1%;
   
-    background: #e8e8e8;
+    background: #222;
     border-radius: .2rem;
-    box-shadow: 0 .2rem 1rem rgba(130, 130, 130, 0.64);
+    /* box-shadow: 0 .2rem 1rem rgba(130, 130, 130, 0.64); */
 }
    
 .track-item #cover{

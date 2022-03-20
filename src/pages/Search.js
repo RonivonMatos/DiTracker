@@ -17,12 +17,14 @@ export function Search() {
   const [query, setQuery] = useState('');
   const [show, setShow] = useState(false);
 
+  var input = document.getElementById("input");
+
   //const query = useParams();
 
   const doSearch = async () => {
     //spotifyApi.setAccessToken("BQBj0Ioaw6iQLKa-g4Jm_NC7-pUNftpXol0uPwUdmrr2RXP4McrvanzB6Iz-89ZzoNj18RAwIiTN3EsvgHc");
     if(query!==''){
-      await spotifyApi.searchArtists(query)
+      await spotifyApi.searchArtists(query, {country : 'BR'})
       .then(function(data) {
         console.log('Search artists by "Iron Maiden:\n', data.body.artists.items);
         setArtistSearch(data.body.artists.items.slice(0,4));
@@ -30,7 +32,7 @@ export function Search() {
         console.error(err);
       });
       
-      await spotifyApi.searchTracks(query)
+      await spotifyApi.searchTracks(query, {country : 'BR'})
       .then(function(data) {
         console.log(`Search by ${query}\n`, data.body.tracks.items);
         setTrackSearch(data.body.tracks.items.slice(0,4));
@@ -38,7 +40,7 @@ export function Search() {
         console.error(err);
       });
 
-      await spotifyApi.searchAlbums(query, {album_type : 'album'})
+      await spotifyApi.searchAlbums(query, {country : 'BR', album_type : 'album'})
       .then(function(data) {
         console.log(`Search Albums by ${query}\n`, data.body.albums.items);
         setAlbumSearch(data.body.albums.items.slice(0,4));
@@ -52,13 +54,13 @@ export function Search() {
   }
 
   function SearchResult(){
-    return(
-      <div>
+    {if(artistSearch[0] != null){
+      return(
+        <div>
             <div id="" className="title">
               <h2>
-                Top artists from your search...
+                Top artists from your search
               </h2>
-              <div className="main-separator-line"></div>
             </div>
             
             <div className="grid-container">
@@ -85,9 +87,8 @@ export function Search() {
 
             <div className="title">
               <h2>
-                Albums...
+                Albums
               </h2>
-              <div className="main-separator-line"></div>
             </div>
 
             <div className="grid-container">
@@ -111,7 +112,7 @@ export function Search() {
             </div>
             <div className="title">
               <h2>
-                Tracks...
+                Tracks
               </h2>
               <div className="main-separator-line"></div>
             </div>
@@ -137,29 +138,43 @@ export function Search() {
             })}
           </div>
         </div>
-    )
+      )
+    }
+    else{
+      return(
+        <div></div>
+      )
+    }}
+
   }
 
     return(
       <>
         <div className="App">
         <div>
-          <form>
-              <input onChange={e => setQuery(e.target.value)} 
+          <div className ="form">
+              <input 
+              onChange={e =>setQuery(e.target.value)}
+              // onKeyPress={e=> {if (e.key === "Enter") {
+              //   console.log("13")
+              //                 // Cancel the default action, if needed
+              //                     e.preventDefault();
+              //                 // Trigger the button element with a click
+              //                     getElementById("searchBtn").click();
+              // }}}
               type="text"
               name="searchBar"
               id="searchBar"
               placeholder="Search for one awesome Artist/Album/Song"
               />
-              <Link to={`/search/${query}`}>
-                <FaSearch onClick={doSearch}/>
+              <Link  to={`/search/${query}`}>
+                <FaSearch  id="searchBtn" onClick={doSearch}/>
               </Link>
 
-            </form>
+            </div> 
         </div>
         </div>
         <Routes>
-          {/* <Route path = "/search" element = {<Search />} /> */}
           <Route path = "/:query/*" element = {<SearchResult />} />
         </Routes>
       </>

@@ -3,10 +3,10 @@ import './App.css';
 import { Home } from './pages/Home';
 import { BrowserRouter, Route, Routes, Link, useParams } from 'react-router-dom';
 import {spotifyApi} from "./services/network/spotify-api/spotify-api";
-import { Artist_Page, Album_Page } from './components';
+import { Artist_Page, Album_Page, Discography_Page } from './components';
 import { Search } from './pages/Search';
 
-spotifyApi.setAccessToken("BQCWMyyWtGPwtcGKKFParNMNtdBPKyyKuJZeuJ_vLJZOU79pBL1cUNZR8ITqJoRCtveBOkLX88pw-ypLmkY");
+// spotifyApi.setAccessToken("BQDOwFpfVdzzneeTBcONIpu41nI2Ggjv1ePzIKrL4YiysXQA89YrlmaN83TekyxR1bPU8XiLCRGuuE1JmU4");
 
 function App() { 
   return (
@@ -39,6 +39,7 @@ function App() {
         <Route path = "/" element = {<Home />} />
         <Route path = "/search/*" element = {<Search />} />
         <Route path = "/artist/:artist_id/*" element = {<Artist_Page />} />
+        {/* <Route path = "/artist/:artist_id/discography/:type/*" element = {<Discography_Page />} /> */}
         <Route path = "/album/:album_id/*" element = {<Album_Page />} />
       </Routes>
     </BrowserRouter>
