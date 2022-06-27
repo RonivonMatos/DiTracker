@@ -1,9 +1,11 @@
 import "./styles.css"
 
+import { FaHeadphones } from 'react-icons/fa';
+
+
 export function Track(props){
     const {
         artistName,
-        albumCover,
         trackTitle,
         track_id,
         duration,

@@ -1,7 +1,7 @@
 import "./styles.css"
 import { useEffect, useState } from "react";
-import { Album_Page, Album_Folder, Discography_Page } from "../../components";
-import { BrowserRouter, Route, Routes, Link, useParams } from 'react-router-dom';
+import { Album_Folder, Discography_Page } from "../../components";
+import { Route, Routes, Link, useParams } from 'react-router-dom';
 import {spotifyApi} from "../../services/network/spotify-api/spotify-api";
 
 export function Artist_Page(){
@@ -64,7 +64,6 @@ export function Artist_Page(){
               if(valor !== null){
                 return(
                     <div key={valor.id}>
-                        <Link to={`/album/${valor.id}`}>
                             <Album_Folder
                             artistName = {valor.artists[0].name}
                             albumName = {valor.name}
@@ -72,7 +71,6 @@ export function Artist_Page(){
                             album_id = {valor.id}
                             >
                             </Album_Folder>
-                        </Link>
                     </div>
                 )
               } 
@@ -95,15 +93,14 @@ export function Artist_Page(){
               if(valor !== null){
                 return(
                     <div key={valor.id}>
-                        <Link to={`/album/${valor.id}`}>
                             <Album_Folder
                             artistName = {valor.artists[0].name}
                             albumName = {valor.name}
                             albumCover = {valor.images[0] !== null ? valor.images[0].url : ""}
                             album_id = {valor.id}
+                            artist_id = {valor.artists[0].id}
                             >
                             </Album_Folder>
-                        </Link>
                     </div>
                 )
               }
@@ -125,15 +122,14 @@ export function Artist_Page(){
               if(valor !== null){
                 return(
                     <div key={valor.id}>
-                        <Link to={`/album/${valor.id}`}>
-                            <Album_Folder
-                            artistName = {valor.artists[0].name}
-                            albumName = {valor.name}
-                            albumCover = {valor.images[0] !== null ? valor.images[0].url : ""}
-                            album_id = {valor.id}
-                            >
-                            </Album_Folder>
-                        </Link>
+                          <Album_Folder
+                          artistName = {valor.artists[0].name}
+                          albumName = {valor.name}
+                          albumCover = {valor.images[0] !== null ? valor.images[0].url : ""}
+                          album_id = {valor.id}
+                          artist_id = {valor.artists[0].id}
+                          >
+                          </Album_Folder>
                     </div>
                 )
               }

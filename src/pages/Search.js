@@ -1,12 +1,9 @@
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 
-import { Artist_Page, Album_Page, Artist_Folder, Album_Folder, Track } from '../components';
-import { BrowserRouter, Route, Routes, Link, useParams } from 'react-router-dom';
+import { Artist_Folder, Album_Folder, Track, Header } from '../components';
+import { Route, Routes, Link } from 'react-router-dom';
 import {spotifyApi} from "../services/network/spotify-api/spotify-api";
 import { FaSearch } from "react-icons/fa";
-
-
-// spotifyApi.setAccessToken("BQC1QjAkP1DSbv9FaabaDATc9bL3d12eNo0SYTg0UdZz1EdJezu0nCowsAQ38wj5pdrmrWq8bBRHlAjNbWE");
 
 export function Search() {
   
@@ -15,27 +12,20 @@ export function Search() {
   const [trackSearch, setTrackSearch] = useState([]);
 
   const [query, setQuery] = useState('');
-  const [show, setShow] = useState(false);
 
-  var input = document.getElementById("input");
-
-  //const query = useParams();
 
   const doSearch = async () => {
-    //spotifyApi.setAccessToken("BQBj0Ioaw6iQLKa-g4Jm_NC7-pUNftpXol0uPwUdmrr2RXP4McrvanzB6Iz-89ZzoNj18RAwIiTN3EsvgHc");
     if(query!==''){
       await spotifyApi.searchArtists(query, {country : 'BR'})
       .then(function(data) {
-        console.log('Search artists by "Iron Maiden:\n', data.body.artists.items);
-        setArtistSearch(data.body.artists.items.slice(0,4));
+        setArtistSearch(data.body.artists.items.slice(0,5));
       }, function(err) {
         console.error(err);
       });
       
       await spotifyApi.searchTracks(query, {country : 'BR'})
       .then(function(data) {
-        console.log(`Search by ${query}\n`, data.body.tracks.items);
-        setTrackSearch(data.body.tracks.items.slice(0,4));
+        setTrackSearch(data.body.tracks.items.slice(0,5));
       }, function(err) {
         console.error(err);
       });
@@ -43,10 +33,10 @@ export function Search() {
       await spotifyApi.searchAlbums(query, {country : 'BR', album_type : 'album'})
       .then(function(data) {
         console.log(`Search Albums by ${query}\n`, data.body.albums.items);
-        setAlbumSearch(data.body.albums.items.slice(0,4));
+        setAlbumSearch(data.body.albums.items.slice(0,5));
       }, function(err) {
         console.error(err);
-      });
+      }); 
     }
     else{
       return
@@ -64,19 +54,16 @@ export function Search() {
             </div>
             
             <div className="grid-container">
-    
-              {artistSearch.slice(0,5).map(valor =>{
-                if(valor !== null && valor.images[0].url !== undefined ){
+              {artistSearch.slice(0,4).map(valor =>{
+                if(valor !== null && valor.images[0] !== undefined ){
                   return(
                     <div key={valor.id}>
-                      <Link to={`/artist/${valor.id}`}>
                         <Artist_Folder
                           artistName = {valor.name}
                           artistPicture = {valor.images[0].url === undefined ? "" : valor.images[0].url}
                           artist_id = {valor.id}
                         >
                         </Artist_Folder>
-                      </Link>
                     </div>
                   );
                 } 
@@ -92,19 +79,18 @@ export function Search() {
             </div>
 
             <div className="grid-container">
-            {albumSearch.map(valor =>{
-                if(valor !== null){
+            {albumSearch.slice(0,4).map(valor =>{
+                if(valor !== null  && valor.images[0] !== undefined ){
                   return(
                     <div key={valor.id}>
-                      <Link to={`/album/${valor.id}`}>
                         <Album_Folder
                           artistName = {valor.artists[0].name}
                           albumName = {valor.name}
                           albumCover = {valor.images[0].url}
                           album_id = {valor.id}
+                          artist_id={valor.artists[0].id}
                         >
                         </Album_Folder>
-                      </Link>
                     </div>
                   )
                 }
@@ -151,28 +137,21 @@ export function Search() {
     return(
       <>
         <div className="App">
-        <div>
-          <div className ="form">
-              <input 
-              onChange={e =>setQuery(e.target.value)}
-              // onKeyPress={e=> {if (e.key === "Enter") {
-              //   console.log("13")
-              //                 // Cancel the default action, if needed
-              //                     e.preventDefault();
-              //                 // Trigger the button element with a click
-              //                     getElementById("searchBtn").click();
-              // }}}
-              type="text"
-              name="searchBar"
-              id="searchBar"
-              placeholder="Search for one awesome Artist/Album/Song"
-              />
-              <Link  to={`/search/${query}`}>
-                <FaSearch  id="searchBtn" onClick={doSearch}/>
-              </Link>
-
+          <Header/>
+          <div>
+            <div className ="form">
+                <input 
+                onChange={e =>setQuery(e.target.value)}
+                type="text"
+                name="searchBar"
+                id="searchBar"
+                placeholder="Search for one awesome Artist/Album/Song"
+                />
+                <Link  to={`/search/${query}`}>
+                  <FaSearch  id="searchBtn" onClick={doSearch}/>
+                </Link>
             </div> 
-        </div>
+          </div>
         </div>
         <Routes>
           <Route path = "/:query/*" element = {<SearchResult />} />

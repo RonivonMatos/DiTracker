@@ -1,15 +1,12 @@
 import "./styles.css"
 import { useEffect, useState } from "react";
-import { Album_Page, Album_Folder } from "../../components";
-import { BrowserRouter, Route, Routes, Link, useParams } from 'react-router-dom';
+import { Album_Page } from "../../components";
+import { useParams } from 'react-router-dom';
 import {spotifyApi} from "../../services/network/spotify-api/spotify-api";
 
 export function Discography_Page(){
 
     const [artistAlbums, setArtistAlbums] = useState([]);
-    // const [artistSingles, setArtistSingles] = useState([]);
-    // const [artistComp, setArtistComp] = useState([]);
-    // const [albumTracks, setAlbumTracks] = useState([]);
 
     const {
       artist_id,

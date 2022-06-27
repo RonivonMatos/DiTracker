@@ -1,0 +1,14 @@
+#profile-page{
+    padding-top: 3.5rem;
+}
+
+.title-button{
+    display: flex;
+    gap: 2rem;
+    align-items:center;
+}
+
+#profile-page button{
+    background-color: #222;
+    color: #1DB954;
+}
