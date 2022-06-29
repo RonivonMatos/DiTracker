@@ -22,9 +22,6 @@ export function Artist_Folder(props){
                 artist_name: artistName,
                 artist_picture:artistPicture
             })
-            artists.once("value", artist => {
-                console.log(artist.val())
-            })
         }
 
     }
@@ -36,7 +33,7 @@ export function Artist_Folder(props){
     } = props;
     
     return(
-    <div class="folder-wrap">
+    <div className="folder-wrap">
     <div id={`${artist_id}`} className ="artist-grid-item">
     <Link to={`/artist/${artist_id}`}>
         <div className="picture-wrap">

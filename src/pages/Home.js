@@ -27,7 +27,7 @@ export function Home() {
 
   return(
     <div>
-      <Header/>
+      {/* <Header/> */}
       <ProfilePage/>
     </div> 
     )

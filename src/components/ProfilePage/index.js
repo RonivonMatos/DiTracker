@@ -25,11 +25,14 @@ export function ProfilePage(){
               albums.map((album) => {
                   let date = new Date(album.release_date);
                   if(date >= thisYear){
+                    console.log(album)
                     releasedAlbums.push(album);
-                    addRelease(artist.id, artist.name ,artist.picture)
+                    addRelease(artist.id, artist.name ,artist.picture, album, album.id)
+                    // addAlbum(artist.id, album, album.id)
                   }
               })
               setAllReleases(releasedAlbums);
+              releasedAlbums = [];
             }, function(err) {
               console.error(err);
             });
@@ -38,15 +41,31 @@ export function ProfilePage(){
         else{
           return
         }
-
     }
 
-async function addRelease(artistId, artistName, artistPicture){
-  const getReleaseRef = await database.ref(`release/${artistId}`).get();
+
+// async function addAlbum(artistId, album, albumId){
+//       const getAlbumRef = await database.ref(`releases/${artistId}/albums/${albumId}`).get();
+//       const albumRef = database.ref(`releases/${artistId}/albums/${albumId}`);
+
+//       if (!getAlbumRef.exists()){
+//         const firebaseRelease = await albumRef.set({
+//             listened: false,
+//             id: album.id,
+//             cover: album.images[0] !== null ? album.images[0].url : "",
+//             name: album.name,
+//             type: album.album_type,
+//             release: album.release_date.slice(0,4),
+//             total_tracks: album.total_tracks
+//         })
+//       }
+// }
+async function addRelease(artistId, artistName, artistPicture, album, albumId){
+  const getReleaseRef = await database.ref(`releases/${artistId}`).get();
 
   if (!getReleaseRef.exists()){
-      const releaseRef = database.ref(`release/${artistId}`);
-      const releases = database.ref(`release/`);
+      const releaseRef = database.ref(`releases/${artistId}`);
+      const albumRef = database.ref(`releases/${artistId}/albums/${albumId}`);
 
       const firebaseRelease = await releaseRef.set({
           user_id: user?.id,
@@ -54,7 +73,32 @@ async function addRelease(artistId, artistName, artistPicture){
           artist_name: artistName,
           artist_picture:artistPicture
       })
+      const firebaseAlbums = await albumRef.set({
+        listened: false,
+        id: album.id,
+        cover: album.images[0] !== null ? album.images[0].url : "",
+        name: album.name,
+        type: album.album_type,
+        release: album.release_date.slice(0,4),
+        total_tracks: album.total_tracks
+    })
   }
+    else{
+      const getAlbumRef = await database.ref(`releases/${artistId}/albums/${albumId}`).get();
+      const albumRef = database.ref(`releases/${artistId}/albums/${albumId}`);
+
+      if (!getAlbumRef.exists()){
+        const firebaseRelease = await albumRef.set({
+            listened: false,
+            id: album.id,
+            cover: album.images[0] !== null ? album.images[0].url : "",
+            name: album.name,
+            type: album.album_type,
+            release: album.release_date.slice(0,4),
+            total_tracks: album.total_tracks
+        })
+      }
+    }
 }
 
   useEffect(()=>{
@@ -71,7 +115,7 @@ async function addRelease(artistId, artistName, artistPicture){
             })
             setSavedArtists(parsedArtist);
           })
-        const releaseRef = database.ref(`release`);
+        const releaseRef = database.ref(`releases`);
           releaseRef.once("value", artist => {
             const artistsRelease = artist.val()
             const parsedArtistRelease = Object.entries(artistsRelease).map(([key, value]) => {
@@ -115,12 +159,21 @@ async function addRelease(artistId, artistName, artistPicture){
                   if(valor.id !== undefined){
                     return(
                       <div key={valor.id}>
-                          <Artist_Folder
-                            artistName = {valor.name}
-                            artistPicture = {valor.picture}
-                            artist_id = {valor.id}
-                          >
-                          </Artist_Folder>
+                            <div className="folder-wrap">
+                            <div id={`${valor.id}`} className ="artist-grid-item">
+                            <Link to={`/releases/${valor.id}`}>
+                                <div className="picture-wrap">
+                                    <img id="picture" src={`${valor.picture}`} alt="artist picture"/>
+                                </div>
+                                <h4>{`${valor.name}`}</h4>
+                            </Link>
+                            </div> 
+                                {/* <div className="check-listen">
+                                    <span>
+                                        <FaHeadphones onClick={()=> {addArtist(valor.id, valor.name)}}/>
+                                    </span>
+                                </div> */}
+                            </div>
                       </div>
                   )}})
                   :

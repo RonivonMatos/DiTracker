@@ -27,7 +27,6 @@ artistRef.once("value", artist => {
 
 return(
     <>
-        <Header/>
         <div id="library" className="grid-container">
         {
         savedArtists.map(valor =>{

@@ -25,7 +25,7 @@ export function Album_Page(props){
         albumType,
         release,
         totalTracks
-    } = props;
+    } = props; 
 
     const getTracks = async () => {
         await spotifyApi.getAlbumTracks(album_id || album_id2)

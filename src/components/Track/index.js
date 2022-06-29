@@ -1,6 +1,6 @@
 import "./styles.css"
 
-import { FaHeadphones } from 'react-icons/fa';
+import { FaHeadphones, FaRegHeart, FaHeart } from 'react-icons/fa';
 
 
 export function Track(props){
@@ -9,11 +9,11 @@ export function Track(props){
         trackTitle,
         track_id,
         duration,
-    } = props;
+    } = props; 
     
     return(  
-    <div>
-    <div id={`${track_id}`} className ="track-item">
+    <div className ="track-item">
+    <div id={`${track_id}`} className ="track-desc">
         <div className="track-description">
             <div id="track-info">
                 <h4>{`${trackTitle}`}</h4>
@@ -24,7 +24,11 @@ export function Track(props){
             </div>
         </div>
     </div>
-    
+        <div className="check-listen">
+            <span>
+                <FaRegHeart/>
+            </span>
+        </div>
     </div>
     )
 }

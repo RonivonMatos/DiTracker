@@ -1,32 +1,38 @@
 .track-item{
     display: flex;
     align-items: center;
+    justify-content: space-between;
     cursor: pointer;
     width: 97%;
         
     margin-top: 10px;
-    margin-right:1%;
+    margin-right: 1%;
     margin-left: 1%;
   
     background: #222;
     border-radius: .2rem;
-    /* box-shadow: 0 .2rem 1rem rgba(130, 130, 130, 0.64); */
 }
    
-.track-item #cover{
-    padding: 0.2rem;
-    height: 4rem;
-    width: 4rem;
-    object-fit: cover;
-    object-position: center;
-    border-radius: 0;
-}
-
 .track-description{
     width: 95%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.track-desc{
+    /* display: flex;
+    align-items: center; */
+    /* justify-content: space-between; */
+    /* cursor: pointer; */
+    width: 100%;
+        
+    margin-right: 1%;
+    margin-left: 1%;
+    padding: .5rem;
+    
+    background: #222;
+    border-radius: .2rem;
 }
 
 #track-info h4{

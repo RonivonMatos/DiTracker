@@ -137,7 +137,6 @@ export function Search() {
     return(
       <>
         <div className="App">
-          <Header/>
           <div>
             <div className ="form">
                 <input 

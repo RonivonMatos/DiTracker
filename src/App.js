@@ -3,7 +3,7 @@ import './App.css';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Artist_Page, Album_Page , Library, Releases} from './components';
+import { Artist_Page, Album_Page , Library, Releases, Header} from './components';
 import { Search } from './pages/Search';
 
 import {AuthContextProvider} from "./contexts/AuthContext"
@@ -13,6 +13,7 @@ function App() {
     <>
     <BrowserRouter>
       <AuthContextProvider>
+        <Header/> 
         <Routes>
             <Route path = "/" element = {<Home />} />
             <Route path = "/library/*" element = {<Library />} />
