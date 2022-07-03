@@ -1,15 +1,26 @@
 import "./styles.css"
 
 import { FaHeadphones, FaRegHeart, FaHeart } from 'react-icons/fa';
+import { database } from "../../services/network/firebase/firebase";
 
 
 export function Track(props){
     const {
-        artistName,
+        // artistName,
         trackTitle,
         track_id,
+        album_id,
+        artist_id,
         duration,
-    } = props; 
+        listened
+    } = props;
+
+    async function toggleListen(artistId, albumId, trackId){
+        const trackRef = database.ref(`releases/${artistId}/albums/${albumId}/tracks/${trackId}`);
+        const firebaseTracks = await trackRef.update({
+            listened: !listened
+        })
+    }
     
     return(  
     <div className ="track-item">
@@ -17,7 +28,7 @@ export function Track(props){
         <div className="track-description">
             <div id="track-info">
                 <h4>{`${trackTitle}`}</h4>
-                <p>{`${artistName}`}</p>
+                {/* <p>{`${artistName}`}</p> */}
             </div>
             <div className="duration">
                 <p>{duration}</p>
@@ -26,7 +37,12 @@ export function Track(props){
     </div>
         <div className="check-listen">
             <span>
-                <FaRegHeart/>
+                {
+                    listened ?
+                    <FaHeart onClick={()=> {toggleListen(artist_id, album_id, track_id)}}/>
+                    :
+                    <FaRegHeart onClick={()=> {toggleListen(artist_id, album_id, track_id)}}/>
+                }
             </span>
         </div>
     </div>

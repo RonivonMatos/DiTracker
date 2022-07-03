@@ -12,9 +12,9 @@ export function ProfilePage(){
     const thisYear = new Date('2022-01-01');
     const [savedArtists, setSavedArtists] = useState();
 
-    var releasedAlbums = []
-    const [allReleases, setAllReleases] = useState();
     const [newReleases, setNewReleases] = useState();
+    let releasedAlbums = []
+    const [updateReleases, setUpdateReleases] = useState();
 
     const searchRelease = () => {
       if(savedArtists.length > 0){
@@ -22,17 +22,13 @@ export function ProfilePage(){
             await spotifyApi.getArtistAlbums(artist.id, {country : 'BR'})
             .then(function(data) {
               let albums = data.body.items;
-              albums.map((album) => {
-                  let date = new Date(album.release_date);
+              albums.map(async (album) => {
+                let date = new Date(album.release_date);
                   if(date >= thisYear){
-                    console.log(album)
-                    releasedAlbums.push(album);
-                    addRelease(artist.id, artist.name ,artist.picture, album, album.id)
-                    // addAlbum(artist.id, album, album.id)
+                    addRelease(artist.id, artist.name ,artist.picture, album, album.id);
                   }
               })
-              setAllReleases(releasedAlbums);
-              releasedAlbums = [];
+              setUpdateReleases([])
             }, function(err) {
               console.error(err);
             });
@@ -43,37 +39,22 @@ export function ProfilePage(){
         }
     }
 
-
-// async function addAlbum(artistId, album, albumId){
-//       const getAlbumRef = await database.ref(`releases/${artistId}/albums/${albumId}`).get();
-//       const albumRef = database.ref(`releases/${artistId}/albums/${albumId}`);
-
-//       if (!getAlbumRef.exists()){
-//         const firebaseRelease = await albumRef.set({
-//             listened: false,
-//             id: album.id,
-//             cover: album.images[0] !== null ? album.images[0].url : "",
-//             name: album.name,
-//             type: album.album_type,
-//             release: album.release_date.slice(0,4),
-//             total_tracks: album.total_tracks
-//         })
-//       }
-// }
 async function addRelease(artistId, artistName, artistPicture, album, albumId){
-  const getReleaseRef = await database.ref(`releases/${artistId}`).get();
+  const getReleaseArtistRef = await database.ref(`releases/${artistId}`).get();
+  let trackRef;
 
-  if (!getReleaseRef.exists()){
-      const releaseRef = database.ref(`releases/${artistId}`);
+  if (!getReleaseArtistRef.exists()){
+      const releaseArtistRef = database.ref(`releases/${artistId}`);
       const albumRef = database.ref(`releases/${artistId}/albums/${albumId}`);
 
-      const firebaseRelease = await releaseRef.set({
-          user_id: user?.id,
-          artist_id:artistId,
-          artist_name: artistName,
-          artist_picture:artistPicture
+      const artistRelease = await releaseArtistRef.set({
+        user_id: user?.id,
+        artist_id:artistId,
+        artist_name: artistName,
+        artist_picture:artistPicture
       })
-      const firebaseAlbums = await albumRef.set({
+
+      const albumsRelease = await albumRef.set({
         listened: false,
         id: album.id,
         cover: album.images[0] !== null ? album.images[0].url : "",
@@ -81,15 +62,33 @@ async function addRelease(artistId, artistName, artistPicture, album, albumId){
         type: album.album_type,
         release: album.release_date.slice(0,4),
         total_tracks: album.total_tracks
-    })
-  }
+      })
+
+      await spotifyApi.getAlbum(album.id)
+        .then(function(data) {
+            data.body.tracks.items.map(async (track) =>{
+              trackRef = database.ref(`releases/${artistId}/albums/${albumId}/tracks/${track.id}`);
+    
+              const trackRelease = await trackRef.set({
+                  listened: false,
+                  id: track.id,
+                  name: track.name,
+                  type: track.type,
+                  duration_ms: track.duration_ms
+              }) 
+          })
+        }, function(err) {
+            console.error(err);
+        });
+      }
+  
     else{
       const getAlbumRef = await database.ref(`releases/${artistId}/albums/${albumId}`).get();
       const albumRef = database.ref(`releases/${artistId}/albums/${albumId}`);
 
       if (!getAlbumRef.exists()){
         const firebaseRelease = await albumRef.set({
-            listened: false,
+            listened: 0,
             id: album.id,
             cover: album.images[0] !== null ? album.images[0].url : "",
             name: album.name,
@@ -97,9 +96,42 @@ async function addRelease(artistId, artistName, artistPicture, album, albumId){
             release: album.release_date.slice(0,4),
             total_tracks: album.total_tracks
         })
+
       }
     }
 }
+
+async function addTrack(artistId, albumId, track){
+  const getTrackRef = await database.ref(`releases/${artistId}/albums/${albumId}/tracks/${track.id}`).get();
+  
+  if (!getTrackRef.exists()){
+    const trackRef = database.ref(`releases/${artistId}/albums/${albumId}/tracks/${track.id}`);
+
+    const trackRelease = await trackRef.set({
+        listened: false,
+        id: track.id,
+        name: track.name,
+        type: track.type,
+        duration_ms: track.duration_ms
+    }) 
+  }
+}
+
+useEffect(()=>{
+  const releaseRef = database.ref(`releases`);
+  releaseRef.once("value", artist => {
+    const artistsRelease = artist.val()
+    const parsedArtistRelease = Object.entries(artistsRelease).map(([key, value]) => {
+        return {
+            id: key,
+            name: value.artist_name,
+            picture: value.artist_picture,
+        }
+    })
+    setNewReleases(parsedArtistRelease);
+  })
+},[updateReleases])
+
 
   useEffect(()=>{
       if(user){

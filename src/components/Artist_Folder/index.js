@@ -8,7 +8,7 @@ import { useAuth } from "../../hooks/useAuth";
 
 export function Artist_Folder(props){
 
-    const {user} = useAuth();
+    const {user} = useAuth(); 
 
     async function addArtist(artistId, artistName){
         const getArtistRef = await database.ref(`artists/${artistId}`).get();
