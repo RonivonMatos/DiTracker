@@ -7,10 +7,16 @@
         
     margin-top: 10px;
     margin-right: 1%;
-    margin-left: 1%;
+    /* margin-left: 1%; */
   
-    background: #222;
+    background: #111;
     border-radius: .2rem;
+
+    height: 3.5rem;
+}
+
+.track-item:hover{
+    background: #222;
 }
    
 .track-description{
@@ -21,18 +27,18 @@
 }
 
 .track-desc{
-    /* display: flex;
-    align-items: center; */
-    /* justify-content: space-between; */
-    /* cursor: pointer; */
     width: 100%;
         
     margin-right: 1%;
-    margin-left: 1%;
-    padding: .5rem;
+    /* margin-left: 1%; */
+    /* padding: .5rem; */
     
-    background: #222;
+    /* background: #222; */
     border-radius: .2rem;
+}
+
+.track-desc:hover{
+    
 }
 
 #track-info h4{

@@ -1,6 +1,6 @@
 import "./styles.css"
 
-import { FaHeadphones } from 'react-icons/fa';
+import { FaHeadphones, FaPlus, FaPlusSquare } from 'react-icons/fa';
 import { Link } from "react-router-dom";
 import { database } from "../../services/network/firebase/firebase";
 import { useAuth } from "../../hooks/useAuth";
@@ -33,7 +33,7 @@ export function Artist_Folder(props){
     } = props;
     
     return(
-    <div className="folder-wrap">
+    // <div className="folder-wrap">
     <div id={`${artist_id}`} className ="artist-grid-item">
     <Link to={`/artist/${artist_id}`}>
         <div className="picture-wrap">
@@ -41,12 +41,12 @@ export function Artist_Folder(props){
         </div>
         <h4>{`${artistName}`}</h4>
     </Link>
-    </div> 
+    {/* </div> 
         <div className="check-listen">
-            <span>
-                <FaHeadphones onClick={()=> {addArtist(artist_id, artistName)}}/>
-            </span>
-        </div>
+            <button className="check-listen-icon" onClick={()=> {addArtist(artist_id, artistName)}}>
+                <FaPlus />
+            </button>
+        </div> */}
     </div>
     )
 }

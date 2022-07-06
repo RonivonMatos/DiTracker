@@ -72,7 +72,7 @@ export function Search() {
 
             </div>
 
-            <div className="title">
+            {/* <div className="title">
               <h2>
                 Albums
               </h2>
@@ -122,7 +122,7 @@ export function Search() {
                 </Track>
               )
             })}
-          </div>
+          </div> */}
         </div>
       )
     }
@@ -144,7 +144,7 @@ export function Search() {
                 type="text"
                 name="searchBar"
                 id="searchBar"
-                placeholder="Search for one awesome Artist/Album/Song"
+                placeholder="Search for one awesome Artist"
                 />
                 <Link  to={`/search/${query}`}>
                   <FaSearch  id="searchBtn" onClick={doSearch}/>

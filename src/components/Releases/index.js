@@ -61,6 +61,34 @@ function Artists(){
                 )}})
         }
         </div> 
+
+        <div className="title">
+            <h2>
+                Listened
+            </h2> 
+        </div>
+        {/* <div className="grid-container">
+         
+        { 
+            newReleases.map(valor =>{
+                if(valor.id !== undefined){
+                    return(
+                    <div key={valor.id}>
+                        <div class="folder-wrap">
+                        <div id={`${valor.id}`} className ="artist-grid-item">
+                        <Link to={`${valor.id}`}>
+                            <div className="picture-wrap">
+                                <img id="picture" src={`${valor.picture}`} alt="artist picture"/>
+                            </div>
+                            <h4>{`${valor.name}`}</h4>
+                        </Link>
+                        </div> 
+                        </div>
+                    </div>
+                )}})
+        }
+        </div>  */}
+        
     </div>
     )
 }

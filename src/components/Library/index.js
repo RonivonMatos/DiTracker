@@ -33,12 +33,14 @@ return(
             if(valor !== null){
             return(
                 <div key={valor.id}>
-                    <Artist_Folder
-                    artistName = {valor.name}
-                    artistPicture = {valor.picture}
-                    artist_id = {valor.id}
-                    >
-                    </Artist_Folder>
+                    <div className="folder-wrap">
+                        <Artist_Folder
+                        artistName = {valor.name}
+                        artistPicture = {valor.picture}
+                        artist_id = {valor.id}
+                        >
+                        </Artist_Folder>
+                    </div>
                 </div>
             ) 
             }

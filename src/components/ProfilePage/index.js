@@ -6,6 +6,8 @@ import {spotifyApi} from "../../services/network/spotify-api/spotify-api";
 import { useAuth } from "../../hooks/useAuth";
 import { database } from "../../services/network/firebase/firebase";
 
+import { FaHeadphones, FaPlus, FaPlusSquare } from 'react-icons/fa';
+
 
 export function ProfilePage(){
     const {user} = useAuth();
@@ -191,21 +193,14 @@ useEffect(()=>{
                   if(valor.id !== undefined){
                     return(
                       <div key={valor.id}>
-                            <div className="folder-wrap">
-                            <div id={`${valor.id}`} className ="artist-grid-item">
-                            <Link to={`/releases/${valor.id}`}>
-                                <div className="picture-wrap">
-                                    <img id="picture" src={`${valor.picture}`} alt="artist picture"/>
-                                </div>
-                                <h4>{`${valor.name}`}</h4>
-                            </Link>
-                            </div> 
-                                {/* <div className="check-listen">
-                                    <span>
-                                        <FaHeadphones onClick={()=> {addArtist(valor.id, valor.name)}}/>
-                                    </span>
-                                </div> */}
-                            </div>
+                        <div className="folder-wrap">
+                            <Artist_Folder
+                            artistName = {valor.name}
+                            artistPicture = {valor.picture}
+                            artist_id = {valor.id}
+                            >
+                            </Artist_Folder>
+                        </div> 
                       </div>
                   )}})
                   :
@@ -230,12 +225,14 @@ useEffect(()=>{
                   if(valor.id !== undefined){
                     return(
                       <div key={valor.id}>
-                          <Artist_Folder
+                        <div className="folder-wrap">
+                            <Artist_Folder
                             artistName = {valor.name}
                             artistPicture = {valor.picture}
                             artist_id = {valor.id}
-                          >
-                          </Artist_Folder>
+                            >
+                            </Artist_Folder>
+                        </div>
                       </div>
                     ) 
                   }

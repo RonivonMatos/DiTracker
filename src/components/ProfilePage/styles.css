@@ -12,3 +12,7 @@
     background-color: #222;
     color: #1DB954;
 }
+
+.title h3:hover{ 
+    text-decoration: underline;
+}

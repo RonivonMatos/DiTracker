@@ -28,7 +28,7 @@ export function Header(){
           signInWithGoogle();
       } 
     return(
-        <div>
+        <div> 
             <header>
                 <LoginLogout/>
             </header>
