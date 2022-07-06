@@ -4,6 +4,9 @@ import { Artist_Folder, Album_Folder, Track, Header } from '../components';
 import { Route, Routes, Link } from 'react-router-dom';
 import {spotifyApi} from "../services/network/spotify-api/spotify-api";
 import { FaSearch } from "react-icons/fa";
+import { database } from "../services/network/firebase/firebase";
+import { FaHeadphones, FaPlus, FaPlusSquare } from 'react-icons/fa';
+import { useAuth } from "../hooks/useAuth";
 
 export function Search() {
   
@@ -12,7 +15,22 @@ export function Search() {
   const [trackSearch, setTrackSearch] = useState([]);
 
   const [query, setQuery] = useState('');
+  const {user} = useAuth(); 
 
+  async function addArtist(artistId, artistName, artistPicture){
+      const getArtistRef = await database.ref(`artists/${artistId}`).get();
+      if (!getArtistRef.exists()){
+          const artistRef = database.ref(`artists/${artistId}/`);
+          const artists = database.ref(`artists/`);
+
+          const firebaseArtists = await artistRef.set({
+              user_id: user?.id,
+              artist_id:artistId,
+              artist_name: artistName,
+              artist_picture:artistPicture
+          })
+      }
+  }
 
   const doSearch = async () => {
     if(query!==''){
@@ -58,13 +76,20 @@ export function Search() {
                 if(valor !== null && valor.images[0] !== undefined ){
                   return(
                     <div key={valor.id}>
-                        <Artist_Folder
-                          artistName = {valor.name}
-                          artistPicture = {valor.images[0].url === undefined ? "" : valor.images[0].url}
-                          artist_id = {valor.id}
-                        >
-                        </Artist_Folder>
-                    </div>
+                        <div className="folder-wrap">
+                          <Artist_Folder
+                            artistName = {valor.name}
+                            artistPicture = {valor.images[0].url === undefined ? "" : valor.images[0].url}
+                            artist_id = {valor.id}
+                          >
+                          </Artist_Folder>
+                          <div className="check-listen">
+                              <button  className="check-listen-icon" onClick={()=> {addArtist(valor.id, valor.name, valor.images[0].url === undefined ? "" : valor.images[0].url)}}>
+                                  <FaPlus />
+                              </button>
+                          </div>
+                        </div>
+                    </div> 
                   );
                 } 
               })}

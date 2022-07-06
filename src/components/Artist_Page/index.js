@@ -106,7 +106,7 @@ export function Artist_Page(){
               }
             })}
           </div>
-          <div className="title">
+          {/* <div className="title">
             <h2>
               Compilations
             </h2>
@@ -134,7 +134,7 @@ export function Artist_Page(){
                 )
               }
             })}
-          </div>
+          </div> */}
       </div>
     )
   }

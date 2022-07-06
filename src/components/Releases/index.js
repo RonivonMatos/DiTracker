@@ -51,11 +51,6 @@ function Artists(){
                             <h4>{`${valor.name}`}</h4>
                         </Link>
                         </div> 
-                            {/* <div className="check-listen">
-                                <span>
-                                    <FaHeadphones onClick={()=> {addArtist(valor.id, valor.name)}}/>
-                                </span>
-                            </div> */}
                         </div>
                     </div>
                 )}})
