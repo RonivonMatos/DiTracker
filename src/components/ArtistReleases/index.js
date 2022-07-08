@@ -1,7 +1,7 @@
 import "./styles.css"
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
-import { Album_Page } from "../../components";
+import { AlbumPage } from "../../components";
 import { FaHeadphones, FaRegHeart, FaHeart } from 'react-icons/fa';
 
 import { database } from "../../services/network/firebase/firebase";

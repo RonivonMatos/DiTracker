@@ -1,6 +1,6 @@
 import "./styles.css"
 import { useEffect, useState } from "react";
-import { Artist_Folder} from "../../components";
+import { ArtistFolder} from "../../components";
 import { Header } from "../../components";
 
 import { useAuth } from "../../hooks/useAuth";
@@ -34,12 +34,12 @@ return(
             return(
                 <div key={valor.id}>
                     <div className="folder-wrap">
-                        <Artist_Folder
+                        <ArtistFolder
                         artistName = {valor.name}
                         artistPicture = {valor.picture}
                         artist_id = {valor.id}
                         >
-                        </Artist_Folder>
+                        </ArtistFolder>
                     </div>
                 </div>
             ) 

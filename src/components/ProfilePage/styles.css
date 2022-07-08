@@ -16,3 +16,23 @@
 .title h3:hover{ 
     text-decoration: underline;
 }
+
+
+.check-listen #remove{
+    /* display: hidden; */
+    opacity: 0;
+    /* background: black; */
+
+}
+
+.check-listen #remove:hover{
+    /* display: flex; */
+    opacity: 1;
+    background: #1DB954;
+    /* color: blue; */
+}
+
+#remove svg{
+    height: 1.5em;
+    width: 1.5em;
+}

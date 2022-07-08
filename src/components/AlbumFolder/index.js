@@ -7,7 +7,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { Link } from "react-router-dom";
 
 
-export function Album_Folder(props){
+export function AlbumFolder(props){
     const {
         artistName,
         albumName,

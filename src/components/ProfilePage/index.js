@@ -1,6 +1,6 @@
 import "./styles.css"
 import { useEffect, useState } from "react";
-import { Artist_Folder, Discography_Page, Album_Folder } from "../../components";
+import { ArtistFolder, DiscographyPage, AlbumFolder } from "../../components";
 import { Route, Routes, Link, useParams } from 'react-router-dom';
 import {spotifyApi} from "../../services/network/spotify-api/spotify-api";
 import { useAuth } from "../../hooks/useAuth";
@@ -208,66 +208,34 @@ useEffect(()=>{
 
 return(
   <div>
-  {savedArtists
-  ?
+
   <div id="profile-page"> 
-
-  <div className="title">
-    <div className="title-button">
-      <h2> 
-        New Releases
-      </h2>
-      <button className="button" onClick={searchRelease}>check for more</button>
-    </div> 
-    <Link to={`releases`}>
-      <h3>
-        SEE ALL
-      </h3>
-    </Link>
-  </div>
-
-  <div className="grid-container">
-    {
-      newReleases ?
-      newReleases.slice(0,4).map(valor =>{
-        if(valor.id !== undefined){
-          return(
-            <div key={valor.id}>
-                  <div className="folder-wrap">
-                  <div id={`${valor.id}`} className ="artist-grid-item">
-                  <Link to={`/releases/${valor.id}`}>
-                      <div className="picture-wrap">
-                          <img id="picture" src={`${valor.picture}`} alt="artist picture"/>
-                      </div>
-                      <h4>{`${valor.name}`}</h4>
-                  </Link>
-                  </div> 
-                  </div>
-            </div>  
-        )}})
-        :
-        null
-    }
-  </div>
-  
+    {savedArtists
+    ?
     <div className="title">
-      <h2>
-        Completed Discographies
-      </h2>
-      <Link to={`library`}>
-        <h3> 
+      <div className="title-button">
+        <h2> 
+          New Releases
+        </h2>
+        <button className="button" onClick={searchRelease}>check for more</button>
+      </div> 
+      <Link to={`releases`}>
+        <h3>
           SEE ALL
         </h3>
       </Link>
     </div>
-
+    :
+    null
+    } 
     <div className="grid-container">
-    {savedArtists ? 
-      savedArtists.slice(0,4).map(valor =>{
-        if(valor.id !== undefined){
-          return(
+      {
+        newReleases ?
+        newReleases.slice(0,4).map(valor =>{
+          if(valor.id !== undefined){
+            return(
               <div key={valor.id}>
-                <div className="folder-wrap">
+                    <div className="folder-wrap">
                     <div id={`${valor.id}`} className ="artist-grid-item">
                     <Link to={`/releases/${valor.id}`}>
                         <div className="picture-wrap">
@@ -276,24 +244,57 @@ return(
                         <h4>{`${valor.name}`}</h4>
                     </Link>
                     </div> 
-                    <div className="check-listen">
-                      <button  className="check-listen-icon" onClick={()=> {removeArtist(valor.id)}}>
-                          <FaTimes fill="#f22" />
-                      </button>
+                    </div>
+              </div>  
+          )}})
+          :
+          null
+      }
+    </div>
+
+    {savedArtists ?
+      <>
+      <div className="title">
+        <h2>
+          Completed Discographies
+        </h2>
+        <Link to={`library`}>
+          <h3> 
+            SEE ALL
+          </h3>
+        </Link>
+      </div>
+      <div className="grid-container">
+        {savedArtists.slice(0,4).map(valor =>{
+          if(valor.id !== undefined){
+            return(
+                <div key={valor.id}>
+                  <div className="folder-wrap">
+                      <div id={`${valor.id}`} className ="artist-grid-item">
+                      <Link to={`/releases/${valor.id}`}>
+                          <div className="picture-wrap">
+                              <img id="picture" src={`${valor.picture}`} alt="artist picture"/>
+                          </div>
+                          <h4>{`${valor.name}`}</h4>
+                      </Link>
+                      </div> 
+                      <div className="check-listen">
+                        <button id="remove" className="check-listen-icon remove" onClick={()=> {removeArtist(valor.id)}}>
+                            <FaTimes  fill="#fff"/>
+                        </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ) 
-          }
-        })
+              ) 
+            }
+          })}
+        </div>
+        </>
         :
         null
       }
-    </div>
 </div>
-  :
-  null
-  } 
+
   </div>
 )
 }

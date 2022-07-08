@@ -91,3 +91,8 @@ body {
 .check-listen.checked svg path{
   color: #1DB954;
 }
+
+
+#search-result{
+  padding-top: 1rem;
+}

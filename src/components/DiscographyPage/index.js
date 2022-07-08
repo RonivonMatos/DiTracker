@@ -1,10 +1,10 @@
 import "./styles.css"
 import { useEffect, useState } from "react";
-import { Album_Page } from "../../components";
+import { AlbumPage } from "..";
 import { useParams } from 'react-router-dom';
 import {spotifyApi} from "../../services/network/spotify-api/spotify-api";
 
-export function Discography_Page(){
+export function DiscographyPage(){
 
     const [artistAlbums, setArtistAlbums] = useState([]);
 
@@ -32,7 +32,7 @@ export function Discography_Page(){
           if(valor !== null){
             return(
                 <div key={valor.id}>
-                  <Album_Page
+                  <AlbumPage
                   album_id2 = {valor.id}
                   albumCover = {valor.images[0] !== null ? valor.images[0].url : ""}
                   albumName = {valor.name}

@@ -9,7 +9,7 @@ import { FaHeadphones, FaRegHeart, FaHeart } from 'react-icons/fa';
 import { database } from "../../services/network/firebase/firebase";
 
  
-export function Album_Page(props){
+export function AlbumPage(props){
     const [albumTracks, setAlbumTracks] = useState([]);
     const [album, setAlbum] = useState();
 

@@ -6,7 +6,7 @@ import { database } from "../../services/network/firebase/firebase";
 import { useAuth } from "../../hooks/useAuth";
  
 
-export function Artist_Folder(props){
+export function ArtistFolder(props){
 
     const {user} = useAuth(); 
 
