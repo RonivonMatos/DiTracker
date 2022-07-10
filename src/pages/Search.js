@@ -1,3 +1,5 @@
+import { useNavigate  } from "react-router-dom";
+
 import {  useState } from 'react';
 
 import { ArtistFolder} from '../components';
@@ -9,7 +11,8 @@ import { FaPlus } from 'react-icons/fa';
 import { useAuth } from "../hooks/useAuth";
 
 export function Search() {
-  
+  const navigate = useNavigate();
+
   const [artistSearch, setArtistSearch] = useState([]);
 
   const [query, setQuery] = useState('');
@@ -66,7 +69,10 @@ export function Search() {
                           >
                           </ArtistFolder>
                           <div className="check-listen">
-                              <button  className="check-listen-icon" onClick={()=> {addArtist(valor.id, valor.name, valor.images[0].url === undefined ? "" : valor.images[0].url)}}>
+                              <button  
+                              className="check-listen-icon" 
+                              onClick={()=> {addArtist(valor.id, valor.name, valor.images[0].url === undefined ? "" : valor.images[0].url)}}
+                              >
                                   <FaPlus />
                               </button>
                           </div>
@@ -98,6 +104,10 @@ export function Search() {
                 name="searchBar"
                 id="searchBar"
                 placeholder="Search for one awesome Artist"
+                onKeyDown={(e) => {if(e.key == "Enter"){
+                  doSearch();
+                  navigate(`${query}`)
+                }}}
                 />
                 <Link  to={`/search/${query}`}>
                   <FaSearch  id="searchBtn" onClick={doSearch}/>
