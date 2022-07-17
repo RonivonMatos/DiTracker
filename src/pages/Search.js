@@ -120,7 +120,6 @@ export function Search() {
         </Routes>
       </>
     )
-
 }
 
 

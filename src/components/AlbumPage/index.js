@@ -29,9 +29,9 @@ export function AlbumPage(props){
     } = props; 
 
     async function toggleListenAlbum(artistId, albumId, listened){
-        // console.log(listened)
         const albumRef = database.ref(`releases/${artistId}/albums/${albumId}`);
         const firebaseAlbums = await albumRef.update({
+            amount_listened: albumRef.total_tracks,
             listened: true
         })
         albumTracks.map(track =>{
@@ -49,7 +49,6 @@ export function AlbumPage(props){
     const getTracks = async () => {
         await spotifyApi.getAlbum(album_id || album_id2)
         .then(function(data) {
-            // console.log('Album information', data.body);
             setAlbum(data.body)
         }, function(err) {
             console.error(err);
@@ -58,7 +57,6 @@ export function AlbumPage(props){
 
     useEffect(() => {
         getTracks()
-        
         const albumRef = database.ref(`releases/${artist_id}/albums/${album_id || album_id2}/tracks`);
         albumRef.once("value", tracks => {
             const tracksRelease = tracks.val()
@@ -66,7 +64,6 @@ export function AlbumPage(props){
                 return value
             }) 
             setAlbumTracks(parsedTracksRelease)
-            // console.log(parsedTracksRelease);
         });
     },[]); 
     
@@ -104,7 +101,6 @@ export function AlbumPage(props){
                     }
                 </div>
                 {albumTracks.map(valor =>{
-                    // console.log(valor)
                     let minutes = Math.floor(valor.duration_ms / 60000);
                     let seconds = Math.round((valor.duration_ms - minutes * 60000)/1000);
                     if(seconds<10){

@@ -59,6 +59,7 @@ async function addRelease(artistId, artistName, artistPicture, album, albumId){
 
       const albumsRelease = await albumRef.set({
         listened: false,
+        amount_listened: 0,
         id: album.id,
         cover: album.images[0] !== null ? album.images[0].url : "",
         name: album.name,
@@ -91,7 +92,8 @@ async function addRelease(artistId, artistName, artistPicture, album, albumId){
 
       if (!getAlbumRef.exists()){
         const firebaseRelease = await albumRef.set({
-            listened: 0,
+            listened: false,
+            amount_listened: 0,
             id: album.id,
             cover: album.images[0] !== null ? album.images[0].url : "",
             name: album.name,

@@ -17,24 +17,37 @@ export function ArtistReleases(props){
         artist_id2,
     } = props;
 
-    async function toggleListenAlbum(artistId, albumId, listened){
+    async function toggleListenAlbum(artistId, albumId, listened, amount, total){
         const albumRef = database.ref(`releases/${artistId}/albums/${albumId}`);
         const firebaseAlbums = await albumRef.update({
+            amount_listened: listened ? 0 : total,
             listened: !listened
         })
         let updateRelease = artistReleases
         setReleases(updateRelease);
-        console.log(artistReleases[albumId].tracks)
         Object.entries(artistReleases[albumId].tracks).map(([id, track]) => {
-            toggleListen(artistId, albumId, track.id, listened);
+            const trackRef = database.ref(`releases/${artistId}/albums/${albumId}/tracks/${track.id}`);
+            const firebaseTracks = trackRef.update({
+                listened: !listened
+            })
         })
     }
 
-    async function toggleListen(artistId, albumId, trackId, listened){
+    async function toggleListen(artistId, albumId, trackId, listened, amount, total){
+        console.log(amount)
+        const albumRef = database.ref(`releases/${artistId}/albums/${albumId}`);
         const trackRef = database.ref(`releases/${artistId}/albums/${albumId}/tracks/${trackId}`);
+        const firebaseAlbums = await albumRef.update({
+            amount_listened: listened ? amount-1 : amount+1,
+            listened: !listened && amount+1 == total ? true : false
+        })
         const firebaseTracks = await trackRef.update({
             listened: !listened
         })
+        // const firebaseAlbums = await albumRef.update({
+        //     amount_listened: listened ? albumRef.amount_listened - 1 : albumRef.amount_listened + 1,
+        //     listened: albumRef.amount_listened==albumRef.total_tracks ? true : false
+        // })
         setReleases([]);
     }
 
@@ -85,9 +98,9 @@ export function ArtistReleases(props){
                                                     {
                                                         album.listened 
                                                         ?
-                                                        <FaHeart fill="#1DB954" onClick={()=> {toggleListenAlbum(artist_id, album.id, album.listened)}}/>
+                                                        <FaHeart fill="#1DB954" onClick={()=> {toggleListenAlbum(artist_id, album.id, album.listened, album.amount_listened, album.total_tracks)}}/>
                                                         :
-                                                        <FaRegHeart onClick={()=> {toggleListenAlbum(artist_id, album.id, album.listened)}}/>
+                                                        <FaRegHeart onClick={()=> {toggleListenAlbum(artist_id, album.id, album.listened, album.amount_listened, album.total_tracks)}}/>
                                                     }
                                                 </span>
                                             </div>
@@ -118,9 +131,9 @@ export function ArtistReleases(props){
                                                 <span>
                                                     {
                                                         valor.listened ?
-                                                        <FaHeart fill="#1DB954" onClick={()=> {toggleListen(artist_id, album.id, valor.id, valor.listened)}}/>
+                                                        <FaHeart fill="#1DB954" onClick={()=> {toggleListen(artist_id, album.id, valor.id, valor.listened, album.amount_listened, album.total_tracks)}}/>
                                                         :
-                                                        <FaRegHeart onClick={()=> {toggleListen(artist_id, album.id, valor.id, valor.listened)}}/>
+                                                        <FaRegHeart onClick={()=> {toggleListen(artist_id, album.id, valor.id, valor.listened, album.amount_listened, album.total_tracks)}}/>
                                                     }
                                                 </span>
                                             </div>
